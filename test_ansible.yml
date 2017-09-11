@@ -2,7 +2,6 @@
 - name: Playbook wrapper for linchpin duffy on fedora atomic
   hosts: fedora-atomic.ci.centos.org
   tasks:
-    - debug: var=username_on_the_host
     - name: run linchpin version
       command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin --version"
       register: out
