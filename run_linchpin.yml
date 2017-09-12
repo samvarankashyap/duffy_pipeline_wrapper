@@ -14,9 +14,14 @@
         state: directory
     - name: "create a virtual env inside directory"
       pip:
+        name: setuptools
+        virtualenv: "/tmp/linchpin_ws_{{ run_id }}"
+        state: latest
+    - name: "install linchpin inside the virtula env"
+      pip:
         name: linchpin
         virtualenv: "/tmp/linchpin_ws_{{ run_id }}"
-    #- name: "install linchpin inside the virtula env"
+        state: latest
     #- name: "clone the workspace into the folder"
     #- name: "run the linchpin up on the workspace"
     #- name: "run linchpin destroy on workspace"
