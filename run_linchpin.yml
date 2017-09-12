@@ -27,7 +27,10 @@
         name: linchpin
         virtualenv: "/tmp/linchpin_ws_{{ run_id }}"
         state: latest
-    #- name: "clone the workspace into the folder"
+    - name: "clone the workspace into the folder"
+      git:
+        repo: https://github.com/samvarankashyap/linchpin_openshift_e2e.git
+        dest: "/tmp/linchpin_ws_{{ run_id }}/"
     #- name: "run the linchpin up on the workspace"
     #- name: "run linchpin destroy on workspace"
     - name: "run linchpin version" 
