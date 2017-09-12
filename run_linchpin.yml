@@ -12,7 +12,10 @@
       file:
         path: "/tmp/linchpin_ws_{{ run_id }}"
         state: directory
-    #- name: "create a virtual env"
+    - name: "create a virtual env inside directory"
+      pip:
+        name: linchpin
+        virtualenv: "/tmp/linchpin_ws_{{ run_id }}"
     #- name: "install linchpin inside the virtula env"
     #- name: "clone the workspace into the folder"
     #- name: "run the linchpin up on the workspace"
