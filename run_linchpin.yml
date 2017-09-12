@@ -17,6 +17,11 @@
         name: setuptools
         virtualenv: "/tmp/linchpin_ws_{{ run_id }}"
         state: latest
+    - name: "create a virtual env inside directory"
+      pip:
+        name: pytz
+        virtualenv: "/tmp/linchpin_ws_{{ run_id }}"
+        state: latest
     - name: "install linchpin inside the virtula env"
       pip:
         name: linchpin
