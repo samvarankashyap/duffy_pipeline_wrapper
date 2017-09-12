@@ -12,6 +12,10 @@
       file:
         path: "/tmp/linchpin_ws_{{ run_id }}"
         state: directory
+    - name: "create a directory for workspace"
+      file:
+        path: "/tmp/linchpin_ws_{{ run_id }}/workspace"
+        state: directory
     - name: "create a virtual env inside directory"
       pip:
         name: setuptools
@@ -30,7 +34,7 @@
     - name: "clone the workspace into the folder"
       git:
         repo: https://github.com/samvarankashyap/linchpin_openshift_e2e.git
-        dest: "/tmp/linchpin_ws_{{ run_id }}/"
+        dest: "/tmp/linchpin_ws_{{ run_id }}/workspace"
     #- name: "run the linchpin up on the workspace"
     #- name: "run linchpin destroy on workspace"
     - name: "run linchpin version" 
