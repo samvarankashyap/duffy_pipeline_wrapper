@@ -2,16 +2,30 @@
 - name: "Playbook wrapper for linchpin duffy on fedora atomic"
   hosts: "fedora-atomic.ci.centos.org"
   tasks:
+    - name: "generate a runid"
+      shell: "python -c 'import time; print(int(time.time()))'"
+      register: run_id
+    - name: "set runid"
+      set_fact:
+        run_id: "{{ run_id['stdout'] }}"
+    - name: "create a directory"
+      file:
+        path: "/tmp/linchpin_ws_{{ run_id }}"
+        state: directory
+    #- name: "create a virtual env"
+    #- name: "install linchpin inside the virtula env"
+    #- name: "clone the workspace into the folder"
+    #- name: "run the linchpin up on the workspace"
+    #- name: "run linchpin destroy on workspace"
     - name: "run linchpin version" 
       command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin --version"
       register: out
     - debug: msg=out
     - name: "run linchpin up to provision duffy node"
-      command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v drop"
+      command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v up"
       register: out2
     - debug: msg=out2
     - name: "run linchpin drop teardown duffy node"
-      command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v drop
-"
+      command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v drop"
       register: out3
     - debug: msg=out3
