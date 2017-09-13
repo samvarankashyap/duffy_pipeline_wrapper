@@ -37,15 +37,25 @@
         dest: "/tmp/linchpin_ws_{{ run_id }}/workspace"
     #- name: "run the linchpin up on the workspace"
     #- name: "run linchpin destroy on workspace"
-    - name: "run linchpin version" 
+    - name: "run linchpin version"
       command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin --version"
       register: out
     - debug: msg=out
     - name: "run linchpin up to provision duffy node"
       command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v up"
-      register: out2
-    - debug: msg=out2
-    - name: "run linchpin drop teardown duffy node"
-      command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v drop"
-      register: out3
-    - debug: msg=out3
+      async: 7200
+      poll: 0
+      register: run_sleeper
+
+    - name: 'check on fire and forget task'
+      async_status: jid={{ run_sleeper.ansible_job_id }}
+      register: job_result
+      until: job_result.finished
+      retries: 120
+      delay: 60
+
+#    - debug: msg=out2
+#    - name: "run linchpin drop teardown duffy node"
+#      command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v drop"
+#      register: out3
+#    - debug: msg=out3
