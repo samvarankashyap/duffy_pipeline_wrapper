@@ -55,7 +55,11 @@
       #delay: 60
 
     - debug: msg=run_sleeper
-#    - name: "run linchpin drop teardown duffy node"
-#      command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v drop"
-#      register: out3
-#    - debug: msg=out3
+    - name: "run linchpin drop teardown duffy node"
+      command: "~/sk_workspace/venvs/lp_duffy/bin/linchpin -w /home/fedora-atomic/sk_workspace/lpduffy/linchtest -v drop"
+      register: out3
+    - debug: msg=out3
+    - name: fetch the e2e.log file
+      fetch:
+        src: /tmp/e2e.log
+        dest: e2e.log
