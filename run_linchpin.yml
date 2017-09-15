@@ -67,6 +67,11 @@
       delegate_to: fedora-atomic.ci.centos.org
 
     - debug: msg=out3
+    - name: remove e2e.log if exists
+      file:
+        path: "e2e.log"
+        state: absent
+      ignore_errors: yes
     - name: fetch the e2e.log file
       fetch:
         src: /tmp/e2e.log
